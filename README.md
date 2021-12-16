@@ -59,7 +59,7 @@ import ipywidgets
 
 ### Use a vega-lite visualization to analyze the Earth Meteorite Landings dataset
 
-[Vegalite Visualization](https://github.io/meteorite-visualization/)
+[Vegalite Visualization](https://ken1009us.github.io/meteorite-visualization/)
 
 ### Most frequent recorded classes of meteorite fall
 
