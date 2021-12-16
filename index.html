@@ -1,0 +1,131 @@
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+        <title>Meteorite Visualization</title>
+    </head>
+    <body>
+        <h1>
+            <p>Meteorite Visualization</p>
+			<!-- <p>Name: Shu-Hao Wu</p> -->
+        </h1>
+        <div id="viz">
+        </div>
+		<p>
+			data source: Nasa.gov
+		</p>
+    </body>
+    <script>
+        mySpec = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {"text": "Earth Meteorite Landings",
+            "anchor": "middle",
+            "fontSize": 20},
+  "params": [
+    {
+      "name": "projection",
+      "value": "equalEarth",
+      "bind": {
+        "input": "select",
+        "options": [
+          "albers",
+          "albersUsa",
+          "azimuthalEqualArea",
+          "azimuthalEquidistant",
+          "conicConformal",
+          "conicEqualArea",
+          "conicEquidistant",
+          "equalEarth",
+          "equirectangular",
+          "gnomonic",
+          "mercator",
+          "naturalEarth1",
+          "orthographic",
+          "stereographic",
+          "transverseMercator"
+        ]
+      }
+    }
+  ],
+  "vconcat":[
+    {
+    "width": 600,
+    "height": 400,
+    "layer": [{
+      "data": {
+        "url": "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json",
+        "format": {"type": "topojson",
+                   "feature": "countries"}
+      },
+      "projection": {"type": {"expr": "projection"}},
+      "mark": {"type": "geoshape",
+               "fill": "lightgray",
+               "stroke": "white"}
+      }, {
+        "data": {
+          "url": "https://data.nasa.gov/resource/y77d-th95.json"
+        },
+        "projection": {"type": {"expr": "projection"}},
+        "mark": "circle",
+        "transform": [
+          {"filter": {"selection": "brush"}}
+          ],
+        "encoding": {
+          "longitude": {
+            "field": "reclong",
+            "type": "quantitative"
+          },
+          "latitude": {
+            "field": "reclat",
+            "type": "quantitative"
+          },
+          "size": {"value": 10},
+          "tooltip": [
+            {"field": "name", "title": "name"},
+            {"field": "mass", "title": "mass"},
+            {"timeUnit": "year", "field": "year", "title": "year", "type": "temporal"},
+            {"field": "reclat", "title": "latitude"},
+            {"field": "reclong", "title": "longitude"}
+          ]
+        }
+      }
+    ]
+  }, {
+    "width": 600,
+    "height": 50,
+    "data": {
+      "url": "https://data.nasa.gov/resource/y77d-th95.json"
+    },
+    "selection": {
+        "brush": {"type": "interval",
+                  "encodings": ["x"]}
+    },
+      "mark": "bar",
+      "encoding": {
+        "x": {"timeUnit": "year", "field": "year", "type": "temporal"},
+        "y": {"aggregate": "count" , "field": "*", "type": "quantitative"}
+      }
+    }, {
+      "width": 600,
+      "height": 50,
+      "data": {
+        "url": "https://data.nasa.gov/resource/y77d-th95.json"
+      },
+      "selection": {
+        "brush": {"type": "interval",
+                  "encodings": ["x"]}
+      },
+      "mark": {
+        "type": "point"
+      },
+      "encoding": {
+        "x": {"timeUnit": "year", "field": "year", "type": "temporal"},
+        "y": {"field": "mass", "type": "quantitative"}
+      }
+    }
+  ]
+};
+        vegaEmbed('#viz', mySpec);
+    </script>
+</html>
