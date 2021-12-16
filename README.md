@@ -1,4 +1,6 @@
-# Introduction
+# Meteorite Visualization
+
+## Introduction
 
 Meteoroids are what we call “space rocks” that range in size from dust grains to small asteroids. This term only applies when they’re in space. Meteorites that fall to Earth represent some of the original, diverse materials that formed planets billions of years ago. These include the age and composition of different planetary building blocks, the temperatures achieved at the surfaces and interiors of asteroids, and the degree to which materials were shocked by impacts in the past.
 
